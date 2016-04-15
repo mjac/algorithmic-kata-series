@@ -34,17 +34,17 @@ namespace Solutions.BROKEN
 
             int maxLength = 0;
 
-            var x = new CharacterStore(keysStillWorking);
+            var characterStore = new CharacterStore(keysStillWorking);
 
             var substringStartIndex = 0;
             for (int overallTextIndex = 0; overallTextIndex < textToType.Length; ++overallTextIndex)
             {
                 var character = textToType[overallTextIndex];
 
-                while (!x.CanAddCharacter(character))
+                while (!characterStore.CanAddCharacter(character))
                 {
                     var previousCharacter = textToType[substringStartIndex];
-                    x.RemoveCharacter(previousCharacter);
+                    characterStore.RemoveCharacter(previousCharacter);
                     substringStartIndex++;
 
                     if (substringStartIndex >= textToType.Length || substringStartIndex > overallTextIndex)
@@ -53,11 +53,11 @@ namespace Solutions.BROKEN
                     }
                 }
 
-                x.AddCharacter(character);
+                characterStore.AddCharacter(character);
 
-                if (x.CurrentLength > maxLength)
+                if (characterStore.CurrentLength > maxLength)
                 {
-                    maxLength = x.CurrentLength;
+                    maxLength = characterStore.CurrentLength;
                 }
             }
 

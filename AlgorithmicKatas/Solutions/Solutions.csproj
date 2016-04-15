@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BROKEN\Description.txt" />
+    <Content Include="BROKEN\Score.txt" />
     <Content Include="FrogRiverOne\Description.txt" />
     <Content Include="FrogRiverOne\Score.txt" />
   </ItemGroup>
