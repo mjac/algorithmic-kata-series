@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BROKEN\Test.cs" />
     <Compile Include="FrogRiverOne\Solution.cs" />
+    <Compile Include="KingdomAndTrees\Problem.cs" />
     <Compile Include="ListeningSongs\Problem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -54,6 +55,7 @@
     <Content Include="BROKEN\Score.txt" />
     <Content Include="FrogRiverOne\Description.txt" />
     <Content Include="FrogRiverOne\Score.txt" />
+    <Content Include="KingdomAndTrees\Description.txt" />
     <Content Include="ListeningSongs\Description.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
