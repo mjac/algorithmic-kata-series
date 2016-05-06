@@ -37,12 +37,16 @@ namespace Solutions.KingdomAndTrees
 
         private static bool HasSolution(int X, int[] heights)
         {
-            int lastHeight = Math.Max(heights[0] - X, 1);
+            int lastHeight = 0;
 
-            foreach (var height in heights.Skip(1))
+            foreach (var height in heights)
             {
                 if (height + X > lastHeight)
                 {
+                    // In the first loop, the height must be at least 1
+                    // In subsequent loops, the height must be at least 1 + lastHeight
+                    // In both cases we want to reduce it as much as possible
+                    // using the spell X
                     lastHeight = Math.Max(height - X, lastHeight + 1);
                 }
                 else
