@@ -24,7 +24,7 @@ namespace Solutions.KingdomAndTrees
         {
             if (minX == maxX)
             {
-                return minX;
+                return X;
             }
 
             if (HasSolution(X, heights))
