@@ -2,12 +2,6 @@
 
 namespace Solutions.ListeningSongs
 {
-    /// <remarks>
-    /// Test cases generated with 
-    /// ({[^}]+})\r\n({[^}]+})\r\n(\d+)\r\n(\d+)\r\nReturns: (-?\d+)
-    /// to
-    /// [TestCase(new []$1, new []$2, $3, $4, $5)]
-    /// </remarks>
     public static class Problem
     {
         public static int GetMaxSongs(int[] durations1, int[] durations2, int minutes, int T)
