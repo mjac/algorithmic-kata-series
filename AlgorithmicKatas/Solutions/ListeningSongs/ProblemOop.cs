@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Solutions.ListeningSongs
@@ -13,109 +14,138 @@ namespace Solutions.ListeningSongs
     {
         public static int GetMaxSongs(int[] durations1, int[] durations2, int minutes, int T)
         {
-            return new ListeningSongs().GetMaxSongs(durations1, durations2, minutes, T);
-        }
+            var seconds = minutes * 60;
 
-        class ListeningSongs
-        {
-            public int GetMaxSongs(int[] durations1, int[] durations2, int minutes, int T)
+            var album1 = new Album(durations1);
+            var album2 = new Album(durations2);
+
+            var albums = new[] { album1, album2 };
+
+            var mandatoryAlbumPlaylist = new MandatorySongPlayer(albums);
+
+            for (var mandatoryIndex = 0; mandatoryIndex < T; ++mandatoryIndex)
             {
-
-                var seconds = minutes*60;
-
-                if (durations1.Length < T || durations2.Length < T)
+                int secondsPlayed;
+                if (mandatoryAlbumPlaylist.TryPlaySong(seconds, out secondsPlayed))
+                {
+                    seconds -= secondsPlayed;
+                }
+                else
                 {
                     return -1;
                 }
+            }
 
-                Array.Sort(durations1);
-                int albumIndex1 = 0;
+            var optionalAlbumPlaylist = new ShortestSongPlayer(albums);
 
-                Array.Sort(durations2);
-                int albumIndex2 = 0;
+            int optionalSecondsPlayed;
+            while (optionalAlbumPlaylist.TryPlaySong(seconds, out optionalSecondsPlayed))
+            {
+                seconds -= optionalSecondsPlayed;
+            }
 
-                int totalSongs = 0;
+            return albums.Sum(o => o.SongsPlayed);
+        }
 
-                for (int mandatoryIndex = 0; mandatoryIndex < T; ++mandatoryIndex)
+        private class Album
+        {
+            public int SongsPlayed { get; private set; }
+
+            private readonly int[] _songDurations;
+            private int _songIndex;
+
+            public Album(IEnumerable<int> songDurations)
+            {
+                _songDurations = songDurations.OrderBy(o => o).ToArray();
+            }
+
+            public bool HasSongsToPlay => _songIndex < _songDurations.Length;
+            public int NextSongLength => _songDurations[_songIndex];
+
+            public bool TryPlaySong(int secondsAvailable, out int secondsPlayed)
+            {
+                if (HasSongsToPlay)
                 {
-                    var songDuration1 = durations1[albumIndex1];
-                    if (songDuration1 > seconds)
+                    var songDuration = _songDurations[_songIndex];
+                    if (songDuration <= secondsAvailable)
                     {
-                        return -1;
-                    }
+                        secondsPlayed = songDuration;
+                        SongsPlayed += 1;
+                        _songIndex += 1;
 
-                    totalSongs += 1;
-                    seconds -= songDuration1;
-                    albumIndex1 += 1;
-
-                    var songDuration2 = durations2[albumIndex2];
-                    if (songDuration2 > seconds)
-                    {
-                        return -1;
-                    }
-
-                    totalSongs += 1;
-                    seconds -= songDuration2;
-                    albumIndex2 += 1;
-                }
-
-                while (albumIndex1 < durations1.Length || albumIndex2 < durations2.Length)
-                {
-                    if (albumIndex1 < durations1.Length && albumIndex2 < durations2.Length)
-                    {
-                        var songDuration1 = durations1[albumIndex1];
-                        var songDuration2 = durations2[albumIndex2];
-
-                        if (songDuration1 < songDuration2)
-                        {
-                            if (songDuration1 > seconds)
-                            {
-                                return totalSongs;
-                            }
-
-                            totalSongs += 1;
-                            seconds -= songDuration1;
-                            albumIndex1 += 1;
-                        }
-                        else
-                        {
-                            if (songDuration2 > seconds)
-                            {
-                                return totalSongs;
-                            }
-
-                            totalSongs += 1;
-                            seconds -= songDuration2;
-                            albumIndex2 += 1;
-                        }
-                    }
-                    else if (albumIndex1 < durations1.Length)
-                    {
-                        var songDuration1 = durations1[albumIndex1];
-                        if (songDuration1 > seconds)
-                        {
-                            return totalSongs;
-                        }
-
-                        totalSongs += 1;
-                        seconds -= songDuration1;
-                        albumIndex1 += 1;
-                    }
-                    else
-                    {
-                        var songDuration2 = durations2[albumIndex2];
-                        if (songDuration2 > seconds)
-                        {
-                            return totalSongs;
-                        }
-
-                        totalSongs += 1;
-                        seconds -= songDuration2;
-                        albumIndex2 += 1;
+                        return true;
                     }
                 }
 
-                return totalSongs;
+                secondsPlayed = 0;
+                return false;
+            }
+        }
+
+        private class MandatorySongPlayer
+        {
+            private readonly IEnumerable<Album> _albumPlaylists;
+
+            public MandatorySongPlayer(IEnumerable<Album> albumPlaylists)
+            {
+                _albumPlaylists = albumPlaylists;
+            }
+
+            public bool TryPlaySong(int secondsAvailable, out int totalSecondsPlayed)
+            {
+                totalSecondsPlayed = 0;
+
+                foreach (var albumPlaylist in _albumPlaylists)
+                {
+                    int secondsPlayed;
+                    if (!albumPlaylist.TryPlaySong(secondsAvailable, out secondsPlayed))
+                    {
+                        return false;
+                    }
+
+                    secondsAvailable -= secondsPlayed;
+                    totalSecondsPlayed += secondsPlayed;
+                }
+
+                return true;
+            }
+        }
+
+        private class ShortestSongPlayer
+        {
+            private readonly IEnumerable<Album> _albumPlaylists;
+
+            public ShortestSongPlayer(IEnumerable<Album> albumPlaylists)
+            {
+                _albumPlaylists = albumPlaylists;
+            }
+
+            public bool TryPlaySong(int secondsAvailable, out int totalSecondsPlayed)
+            {
+                totalSecondsPlayed = 0;
+
+                int secondsPlayed;
+                while (TryPlayNextSong(secondsAvailable, out secondsPlayed))
+                {
+                    secondsAvailable -= secondsPlayed;
+                    totalSecondsPlayed += secondsPlayed;
+                }
+
+                return totalSecondsPlayed > 0;
+            }
+
+            private bool TryPlayNextSong(int secondsAvailable, out int secondsPlayed)
+            {
+                var albumPlaylistsWithSongs = _albumPlaylists.Where(o => o.HasSongsToPlay).ToArray();
+                if (albumPlaylistsWithSongs.Any())
+                {
+                    var nextAlbum = albumPlaylistsWithSongs.Min(o => o.NextSongLength);
+                    var nextPlayList = albumPlaylistsWithSongs.First(o => o.NextSongLength == nextAlbum);
+                    return nextPlayList.TryPlaySong(secondsAvailable, out secondsPlayed);
+                }
+
+                secondsPlayed = 0;
+                return false;
             }
         }
     }
