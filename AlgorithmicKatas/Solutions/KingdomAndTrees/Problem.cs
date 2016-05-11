@@ -58,5 +58,26 @@ namespace Solutions.KingdomAndTrees
 
             return true;
         }
+
+        /// <summary>
+        /// This is an alternate binary search approach (unused)
+        /// </summary>
+        private static int BinarySearchLoop(int minX, int maxX, int[] heights)
+        {
+            while (minX != maxX)
+            {
+                var X = (minX + maxX) / 2;
+                if (HasSolution(X, heights))
+                {
+                    maxX = X;
+                }
+                else
+                {
+                    minX = X + 1;
+                }
+            }
+
+            return minX;
+        }
     }
 }
