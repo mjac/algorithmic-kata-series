@@ -16,8 +16,8 @@ namespace Solutions.ListeningSongs
         {
             var seconds = minutes * 60;
 
-            var album1 = new Album(durations1);
-            var album2 = new Album(durations2);
+            var album1 = new Album(durations1.OrderBy(o => o));
+            var album2 = new Album(durations2.OrderBy(o => o));
 
             var albums = new[] { album1, album2 };
 
@@ -56,7 +56,7 @@ namespace Solutions.ListeningSongs
 
             public Album(IEnumerable<int> songDurations)
             {
-                _songDurations = songDurations.OrderBy(o => o).ToArray();
+                _songDurations = songDurations.ToArray();
             }
 
             public bool HasSongsToPlay => _songIndex < _songDurations.Length;
