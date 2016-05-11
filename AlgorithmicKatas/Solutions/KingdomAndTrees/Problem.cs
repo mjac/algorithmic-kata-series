@@ -17,22 +17,23 @@ namespace Solutions.KingdomAndTrees
                 return 0;
             }
 
-            return BinarySearch(MinX, (MinX + MaxX) / 2, MaxX, heights);
+            return BinarySearch(MinX, MaxX, heights);
         }
 
-        public static int BinarySearch(int minX, int X, int maxX, int[] heights)
+        public static int BinarySearch(int minX, int maxX, int[] heights)
         {
             if (minX == maxX)
             {
-                return X;
+                return minX;
             }
 
+            var X = (minX + maxX) / 2;
             if (HasSolution(X, heights))
             {
-                return BinarySearch(minX, (minX + X) / 2, X, heights);
+                return BinarySearch(minX, X, heights);
             }
 
-            return BinarySearch(X + 1, (X + 1 + maxX) / 2, maxX, heights);
+            return BinarySearch(X + 1, maxX, heights);
         }
 
         private static bool HasSolution(int X, int[] heights)
