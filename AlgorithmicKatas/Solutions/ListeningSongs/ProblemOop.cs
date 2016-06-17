@@ -10,8 +10,16 @@ namespace Solutions.ListeningSongs
     /// to
     /// [TestCase(new []$1, new []$2, $3, $4, $5)]
     /// </remarks>
-    public static class ProblemOop
+    public class ProblemOop
     {
+        /// <summary>
+        /// For TopCoder, scored at 248.01
+        /// </summary>
+        public int listen(int[] durations1, int[] durations2, int minutes, int T)
+        {
+            return GetMaxSongs(durations1, durations2, minutes, T);
+        }
+
         public static int GetMaxSongs(int[] durations1, int[] durations2, int minutes, int T)
         {
             var seconds = minutes * 60;
@@ -59,8 +67,15 @@ namespace Solutions.ListeningSongs
                 _songDurations = songDurations.ToArray();
             }
 
-            public bool HasSongsToPlay => _songIndex < _songDurations.Length;
-            public int NextSongLength => _songDurations[_songIndex];
+            public bool HasSongsToPlay
+            {
+                get { return _songIndex < _songDurations.Length; }
+            }
+
+            public int NextSongLength
+            {
+                get { return _songDurations[_songIndex]; }
+            }
 
             public bool TryPlaySong(int secondsAvailable, out int secondsPlayed)
             {

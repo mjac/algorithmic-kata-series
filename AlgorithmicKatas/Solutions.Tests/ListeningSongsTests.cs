@@ -18,10 +18,10 @@ namespace Solutions.Tests
         [TestCase(new[] { 100, 200, 300, 400, 500, 600 }, new[] { 100, 200 }, 1000, 3, -1)]
         public void test(int[] durations1, int[] durations2, int minutes, int T, int expectedMaxSongs)
         {
-            var maxSongs = Problem.GetMaxSongs(durations1, durations2, minutes, T);
+            var maxSongs = ProblemOop.GetMaxSongs(durations1, durations2, minutes, T);
             Assert.That(maxSongs, Is.EqualTo(expectedMaxSongs));
 
-            var maxSongs2 = Problem.GetMaxSongs(durations2, durations1, minutes, T);
+            var maxSongs2 = ProblemOop.GetMaxSongs(durations2, durations1, minutes, T);
             Assert.That(maxSongs2, Is.EqualTo(expectedMaxSongs));
         }
     }

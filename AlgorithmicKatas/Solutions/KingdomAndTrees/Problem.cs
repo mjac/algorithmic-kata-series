@@ -3,12 +3,20 @@ using System.Linq;
 
 namespace Solutions.KingdomAndTrees
 {
-    public static class Problem
+    public class Problem
     {
         private const int MaxHeight = 1000000000;
 
         private const int MinX = 0;
         private const int MaxX = MaxHeight;
+
+        /// <summary>
+        /// For TopCoder, scored > 495
+        /// </summary>
+        public int minLevel(int[] heights)
+        {
+            return GetMinLevel(heights);
+        }
 
         public static int GetMinLevel(int[] heights)
         {
