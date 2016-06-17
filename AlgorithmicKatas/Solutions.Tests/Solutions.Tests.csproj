@@ -48,6 +48,7 @@
     <Compile Include="FrogRiverOneTests.cs" />
     <Compile Include="KingdomAndTreesTests.cs" />
     <Compile Include="ListeningSongsTests.cs" />
+    <Compile Include="MaxCountersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

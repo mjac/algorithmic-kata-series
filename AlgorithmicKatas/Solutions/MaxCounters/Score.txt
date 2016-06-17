@@ -1,0 +1,108 @@
+﻿Code: 15:47:33 UTC, cs, final, score:  100
+show code in pop-up
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+using System;
+using System.Linq;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+        public int[] solution(int N, int[] A)
+        {
+            if (N < 1)
+            {
+                return new int[0];
+            }
+
+            int overallMax = 0;
+            int maxCounterMax = 0;
+
+            var counters = new int[N];
+
+            foreach (var a in A)
+            {
+                if (a == N + 1)
+                {
+                    maxCounterMax = overallMax;
+                }
+                else
+                {
+                    counters[a - 1] = Math.Max(counters[a - 1], maxCounterMax);
+                    counters[a - 1]++;
+                    overallMax = Math.Max(counters[a - 1], overallMax);
+                }
+            }
+
+            return counters.Select(x => Math.Max(maxCounterMax, x)).ToArray();
+        }
+}
+Analysis summary
+The solution obtained perfect score.
+
+Analysis
+Detected time complexity:
+O(N + M)
+
+and allExample tests
+▶ example 
+example test ✔OK
+expand allCorrectness tests
+▶ extreme_small 
+all max_counter operations ✔OK
+▶ single 
+only one counter ✔OK
+▶ small_random1 
+small random test, 6 max_counter operations ✔OK
+▶ small_random2 
+small random test, 10 max_counter operations ✔OK
+expand allPerformance tests
+▶ medium_random1 
+medium random test, 50 max_counter operations ✔OK
+▶ medium_random2 
+medium random test, 500 max_counter operations ✔OK
+▶ large_random1 
+large random test, 2120 max_counter operations ✔OK
+▶ large_random2 
+large random test, 10000 max_counter operations ✔OK
+▶ extreme_large 
+all max_counter operations ✔OK

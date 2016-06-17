@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Solutions.MaxCounters
 {
@@ -11,22 +12,26 @@ namespace Solutions.MaxCounters
                 return new int[0];
             }
 
+            int overallMax = 0;
+            int maxCounterMax = 0;
+
             var counters = new int[N];
 
             foreach (var a in A)
             {
                 if (a == N + 1)
                 {
-                    var element = counters.Max();
-                    counters = Enumerable.Repeat(element, N).ToArray();
+                    maxCounterMax = overallMax;
                 }
                 else
                 {
+                    counters[a - 1] = Math.Max(counters[a - 1], maxCounterMax);
                     counters[a - 1]++;
+                    overallMax = Math.Max(counters[a - 1], overallMax);
                 }
             }
 
-            return counters;
+            return counters.Select(x => Math.Max(maxCounterMax, x)).ToArray();
         }
     }
 }
