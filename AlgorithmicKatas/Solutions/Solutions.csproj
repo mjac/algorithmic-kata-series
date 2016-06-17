@@ -49,6 +49,7 @@
     <Compile Include="KingdomAndTrees\Problem.cs" />
     <Compile Include="ListeningSongs\Problem.cs" />
     <Compile Include="ListeningSongs\ProblemOop.cs" />
+    <Compile Include="MaxCounters\Solution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
