@@ -20,16 +20,12 @@ namespace Solutions.PaintingFence
             }
 
             var horizontalStrokes = postHeights.Min();
-            if (horizontalStrokes >= width)
-            {
-                return width;
-            }
 
             var unpaintedHeights = postHeights.Select(h => h - horizontalStrokes);
             var postSections = getRemainingPosts(unpaintedHeights);
-            var sectionStrokes = postSections.Sum(countStrokes);
+            var sectionStrokes = postSections.Sum(A => countStrokes(A));
 
-            return horizontalStrokes + sectionStrokes;
+            return Math.Min(width, horizontalStrokes + sectionStrokes);
         }
 
         private static List<List<int>> getRemainingPosts(IEnumerable<int> posts)
