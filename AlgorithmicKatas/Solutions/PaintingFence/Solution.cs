@@ -14,23 +14,22 @@ namespace Solutions.PaintingFence
         private int countStrokes(ICollection<int> postHeights)
         {
             var width = postHeights.Count;
-            if (width == 1)
+            if (postHeights.Count == 1)
             {
                 return 1;
             }
 
-            var height = postHeights.Max();
-            if (width < height)
+            var horizontalStrokes = postHeights.Min();
+            if (horizontalStrokes >= width)
             {
-                // We can paint every fence vertically faster in this case
-                // < instead of <= because of 1 1 3 case where it is faster to paint the bottom row
                 return width;
             }
 
-            var horizontalStrokes = postHeights.Min();
+            var unpaintedHeights = postHeights.Select(h => h - horizontalStrokes);
+            var postSections = getRemainingPosts(unpaintedHeights);
+            var sectionStrokes = postSections.Sum(countStrokes);
 
-            var remainingPosts = getRemainingPosts(postHeights.Select(a => a - horizontalStrokes));
-            return horizontalStrokes + remainingPosts.Sum(A => countStrokes(A));
+            return horizontalStrokes + sectionStrokes;
         }
 
         private static List<List<int>> getRemainingPosts(IEnumerable<int> posts)
