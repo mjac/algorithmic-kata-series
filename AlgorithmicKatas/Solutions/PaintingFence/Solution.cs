@@ -28,11 +28,11 @@ namespace Solutions.PaintingFence
 
             var horizontalStrokes = a.Min();
 
-            var remainingPosts = GetRemainingPosts(a.Select(o => o - horizontalStrokes));
+            var remainingPosts = getRemainingPosts(a.Select(o => o - horizontalStrokes));
             return horizontalStrokes + remainingPosts.Sum(o => countStrokes(o));
         }
 
-        private static List<List<int>> GetRemainingPosts(IEnumerable<int> posts)
+        private static List<List<int>> getRemainingPosts(IEnumerable<int> posts)
         {
             var postSections = new List<List<int>>();
 
@@ -55,6 +55,29 @@ namespace Solutions.PaintingFence
             }
 
             return postSections;
+        }
+
+        public static void Main()
+        {
+            string postCountLine;
+            while ((postCountLine = Console.ReadLine()) != null)
+            {
+                int N;
+                if (int.TryParse(postCountLine, out N))
+                {
+                    if (N == 0)
+                    {
+                        return;
+                    }
+
+                    var postHeightLine = Console.ReadLine();
+
+                    var A = postHeightLine.Split(new char[] { ' ' }).Select(int.Parse).ToArray();
+                    var writeText = new Solution().solution(N, A);
+
+                    Console.WriteLine(writeText);
+                }
+            }
         }
     }
 }
