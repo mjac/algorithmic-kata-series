@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BROKEN\Test.cs" />
+    <Compile Include="FlowerGarden\Solution.cs" />
     <Compile Include="FrogRiverOne\Solution.cs" />
     <Compile Include="KingdomAndTrees\Problem.cs" />
     <Compile Include="ListeningSongs\Problem.cs" />
@@ -63,7 +64,9 @@
     <Content Include="MaxCounters\Description.txt" />
     <Content Include="MaxCounters\Score.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="FlowerGarden\Description.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

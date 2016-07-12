@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BROKENTests.cs" />
+    <Compile Include="FlowerGardenAcceptanceTests.cs" />
+    <Compile Include="FlowerGardenTests.cs" />
     <Compile Include="FrogRiverOneTests.cs" />
     <Compile Include="KingdomAndTreesTests.cs" />
     <Compile Include="ListeningSongsTests.cs" />
