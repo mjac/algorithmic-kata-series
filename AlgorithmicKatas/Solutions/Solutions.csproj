@@ -63,6 +63,8 @@
     <Content Include="ListeningSongs\Description.txt" />
     <Content Include="MaxCounters\Description.txt" />
     <Content Include="MaxCounters\Score.txt" />
+    <Content Include="PaintingFence\Description.txt" />
+    <Content Include="PaintingFence\Score.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FlowerGarden\Description.txt" />

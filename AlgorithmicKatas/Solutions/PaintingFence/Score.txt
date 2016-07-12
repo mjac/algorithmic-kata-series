@@ -1,0 +1,4 @@
+﻿My Submissions 
+  
+#	When	Who	Problem	Lang	Verdict	Time	Memory
+18680409	2016-06-23 20:44:00	mjacdotuk	C - Painting Fence	Mono C#	Wrong answer on test 5	46 ms	2500 KB
