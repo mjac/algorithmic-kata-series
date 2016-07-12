@@ -31,17 +31,18 @@ namespace Solutions.FlowerGarden
             var flowersToPlace = flowers.ToList();
             while (flowersToPlace.Any())
             {
-                var min = flowersToPlace.OrderBy(o => o.Height).First(o => !o.IsBlocked);
-                foreach (var blockedFlower in min.Blocks)
+                var min = flowersToPlace.OrderByDescending(o => o.Height).First(o => !o.IsBlocking);
+                foreach (var blockedFlower in min.BlockedBy)
                 {
-                    blockedFlower.BlockedBy.Remove(min);
+                    blockedFlower.Blocks.Remove(min);
                 }
+                min.BlockedBy.Clear();
 
                 flowersToPlace.Remove(min);
                 orderedFlowers.Add(min);
             }
 
-            return orderedFlowers.Select(o=>o.Height).Reverse().ToArray();
+            return orderedFlowers.Select(o => o.Height).ToArray();
         }
 
         private class Flower
@@ -59,7 +60,7 @@ namespace Solutions.FlowerGarden
             public List<Flower> Blocks { get; set; }
             public List<Flower> BlockedBy { get; set; }
 
-        public bool IsBlocked => BlockedBy.Any();
+            public bool IsBlocking => Blocks.Any();
 
             public bool IsBlockedBy(Flower f2)
             {

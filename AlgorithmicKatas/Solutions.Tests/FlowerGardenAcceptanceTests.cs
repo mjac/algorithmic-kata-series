@@ -5,7 +5,6 @@ namespace Solutions.Tests
 {
     class FlowerGardenAcceptanceTests
     {
-        [Ignore]
         [TestCase(new[] { 5, 4, 3, 2, 1 }, new[] { 1, 1, 1, 1, 1 }, new[] { 365, 365, 365, 365, 365 }, new[] { 1, 2, 3, 4, 5 })]
         [TestCase(new[] { 5, 4, 3, 2, 1 }, new[] { 1, 5, 10, 15, 20 }, new[] { 4, 9, 14, 19, 24 }, new[] { 5, 4, 3, 2, 1 })]
         [TestCase(new[] { 5, 4, 3, 2, 1 }, new[] { 1, 5, 10, 15, 20 }, new[] { 5, 10, 15, 20, 25 }, new[] { 1, 2, 3, 4, 5 })]
